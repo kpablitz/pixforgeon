@@ -1,8 +1,8 @@
+# pixforgeon Neural Style Transfer (NST) app
+<!-- HTML code to position the logo on the right side of the heading -->
 <div style="position: absolute; top: 10px; right: 10px;">
     <img src="images/logo.ico" alt="Logo" width="100" height="100">
 </div>
-
-# pixforgeon Neural Style Transfer (NST) app
 
 ## Table of Contents
 
