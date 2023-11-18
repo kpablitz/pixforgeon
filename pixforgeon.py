@@ -47,6 +47,12 @@ def process_arguments():
     content_image_path = args.content_image
     style_image_path = args.style_image
     epochs = args.epochs
+    if not args.output_filename.endswith('.jpg'):
+        args.output_filename += '.jpg'
+    output_path = os.path.join("output_images", args.output_filename)
+    # Create the output folder if it doesn't exist
+    os.makedirs("output_images", exist_ok=True)
+    output_path = f"{output_path}"
 
     # Validate paths
     validate_paths([content_image_path, style_image_path])
@@ -55,7 +61,7 @@ def process_arguments():
     if not isinstance(epochs, int):
         raise ValueError(f"Error: 'epochs' must be an integer")
 
-    return content_image_path, style_image_path, epochs
+    return content_image_path, style_image_path, epochs, output_path
 
 def gram_matrix(input_tensor):
     # Reshape the input tensor (batch, h,w,c ) to (batch_size, height*width, channels)
@@ -125,7 +131,7 @@ class ArtisticFeatureExtractor(tf.keras.models.Model):
     return {'content': content_dict, 'style': style_dict}
 
 def main():
-    content_image_path, style_image_path, epochs = process_arguments()
+    content_image_path, style_image_path, epochs, output_path = process_arguments()
     content_image = load_img(content_image_path)
     style_image = load_img(style_image_path)
     feature_extractor = ArtisticFeatureExtractor(STYLE_LAYERS, CONTENT_LAYERS)
@@ -154,7 +160,7 @@ def main():
         train_step(image)
     image = tensor_to_image(image)
     #plt.imshow(image)
-    image.save(f"output/stylized_image.jpg")
+    image.save(f"{output_path}")
 
     pass
 
