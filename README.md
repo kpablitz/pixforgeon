@@ -1,11 +1,11 @@
 
-# pixforgeon Neural Style Transfer (NST) appi <img src="images/logo.ico" alt="Logo" width="100" height="100" style="float: right; margin-top: 20px; margin-right: 20px;">
+# pixforgeon Neural Style Transfer (NST) app  <img src="images/logo.png" alt="Logo" width="100" height="100" style="float: right; margin-top: 30px; margin-right: 20px;">
 
 TEXT
 
 ## Table of Contents
 
-- [pixforgeon Neural Style Transfer (NST) appi ](#pixforgeon-neural-style-transfer-nst-appi-)
+- [pixforgeon Neural Style Transfer (NST) app  ](#pixforgeon-neural-style-transfer-nst-app--)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Repo Structure](#repo-structure)
