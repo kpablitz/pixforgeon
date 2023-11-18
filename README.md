@@ -1,19 +1,52 @@
 
-# pixforgeon Neural Style Transfer (NST) app  <img src="images/logo.png" alt="Logo" width="100" height="100" style="float: right; margin-top: 30px; margin-right: 20px;">
+# pixforgeon <img src="images/logo.png" alt="Logo" width="130" height="130" style="float: right; margin-top: 60px; margin-right: 20px;">
 
-TEXT
+**pixforgeon** is my experimental implementation of **Neural Style Transfer (NST)** using `TensorFlow`. `myvgg` was first developed following the guidelines of the original **VGG19** implementation (https://arxiv.org/pdf/1409.1556.pdf). Subsequently, the **NST** technique was utilized, blending the style of one image into the content of another, resulting in visually mesmerizing compositions.
 
 ## Table of Contents
-
-- [pixforgeon Neural Style Transfer (NST) app  ](#pixforgeon-neural-style-transfer-nst-app--)
+- [pixforgeon ](#pixforgeon-)
   - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
+  - [Synopsis](#synopsis)
+  - [Personal Remarks](#personal-remarks)
   - [Repo Structure](#repo-structure)
   - [In a Nutshell](#in-a-nutshell)
 
-## Overview
+## Synopsis
+**NST** is an innovative technique that performs the following steps:
+
+1. **Input Images:** Select a content image and a style reference image.
+
+2. **Feature Extraction:** Employ a pre-trained neural network, **VGG19** in this case, to extract features from both the content and style images. This process involves selecting specific layers that capture meaningful information. Typically, the initial layers' activations capture basic or low-level features, whereas the activations in the final layers represent more complex or high-level features.
+
+3. **Loss Calculation:** Calculate the loss function to measure the disparity between the generated/stylized image and both the content and style of the reference image. 
+
+4. **Optimization:** Apply an optimization algorithm to minimize the overall loss by adjusting the pixel values of the generated image.
+
+5. **Output Image:** The final output is a stylized image that combines the content of the chosen image with the artistic style of the reference image.
+
+## Personal Remarks
+My main sources of applying `step 3` was an exercise in the a course offered by DeepLearning.AI in the platform instructed by Andrew Ng and  [this](https://www.tensorflow.org/tutorials/generative/style_transfer) tutorial by TensorFlow. 
+
+Since that and because I noticed an inconsistency between the 2 implementations which is that in the latter, the loss function is not applied directly to the content image, I have checked numerous sources to understand the reason. It turns out that by following the latter approach, the style features can be more dominant and thus converge (generate) a style on the generated image faster.
+
+By applying the second technique and experimenting with different images of actual faces, I noticed that the style can take over quite fast (approx. 400 epochs. This number was set as default if not epochs are specified) and generates some satisfying results, while other times for epochs > 2000 and a learning rate of 0.01, the style distorts the image, leading to rather fascinating or funny outcomes.
 
 ## Repo Structure
+pixforgeon/
+│
+├── README.md
+├── images/
+│   ├── logo.png
+│   ├── style_images/
+│
+├── myvgg.py
+├── output_images/
+├── pixforgeon.py
+├── pretrained_model/
+│   └── vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5
+├── requirements.txt
+└── utils.py
+
 
 ## In a Nutshell
 
