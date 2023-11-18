@@ -36,6 +36,8 @@ def process_arguments():
     parser.add_argument('--style-image', type=str, help='Path to the style image file')
     # Adding an optional argument
     parser.add_argument('--epochs', type=int, default=400, help='Number of echoes (default is 400)')
+    parser.add_argument('--output-filename', type=str, default='stylized_image.jpg',
+                        help='Name of the output stylized image file.')
 
 
     # Parsing the arguments
