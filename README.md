@@ -9,6 +9,8 @@
   - [Personal Remarks](#personal-remarks)
   - [Repo Structure](#repo-structure)
   - [Roll it!](#roll-it)
+  - [Logo](#logo)
+  - [License](#license)
 
 ## Synopsis
 **NST** is an innovative technique that performs the following steps:
@@ -55,20 +57,30 @@ Enhance your images with **NST** using the pixforgeon.py script. Explore the ava
 options:
   -h, --help            show this help message and exit
   --content-image CONTENT_IMAGE
-                        Path to the content image file
+                        Path to the content image file, including the image name. Example: /path/to/image/your_content_image.jpg
   --style-image STYLE_IMAGE
-                        Path to the style image file
+                        Path to the content image file, including the image name. Example: /path/to/image/your_style_image.jpg
   --epochs EPOCHS       Number of echoes. Default: 400
   --output-filename OUTPUT_FILENAME
                         Specify the output filename for the generated image. Default: stylized_image.jpg
   --learning-rate LEARNING_RATE
                         Set the learning rate. Default: 0.01
 ```
-Fields that have Default values are optional
+Fields that have Default values are optional.
 
-Give execute rights to `chmod +x pixforgeon.py
-`
+Give execute rights to `chmod +x pixforgeon.py` or use `python3 pixforgeon.py`  
 
 Run: `./pixforgeon.py --content-image /path/to/image/your_content_image.jpg --style-image /path/to/image/your_style_image.jpg`
 
 I have tested it with `jpg` `jpeg` `png` formats.
+
+You can configure the name of the generated image with the option `--output-filename OUTPUT_FILENAME`. The generates image is stored under `./output_images/` folder which is created in case it is missing.
+
+![NST_Output_Plot](images/NST_outputs_plot.jpg)
+
+## Logo
+Logo was generated on [here](https://logo.com/).
+
+## License 
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
