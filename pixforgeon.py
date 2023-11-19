@@ -16,7 +16,7 @@ STYLE_LAYERS = ['block1_conv1',
                 'block3_conv1', 
                 'block4_conv1', 
                 'block5_conv1']
-ALPHA_RATE = 0.01                
+
 
 num_content_layers = len(CONTENT_LAYERS)
 num_style_layers = len(STYLE_LAYERS)
@@ -32,13 +32,13 @@ def process_arguments():
     parser = argparse.ArgumentParser(description='Image Processing Script')
 
     # Adding arguments
-    parser.add_argument('--content-image', type=str, help='Path to the content image file')
-    parser.add_argument('--style-image', type=str, help='Path to the style image file')
+    parser.add_argument('--content-image', type=str, help='Path to the content image file, including the image name. Example: /path/to/image/your_content_image.jpg')
+    parser.add_argument('--style-image', type=str, help='Path to the content image file, including the image name. Example: /path/to/image/your_style_image.jpg')
     # Adding an optional argument
-    parser.add_argument('--epochs', type=int, default=400, help='Number of echoes.\nDefault: 400')
+    parser.add_argument('--epochs', type=int, default=400, help='Number of echoes. Default: 400')
     parser.add_argument('--output-filename', type=str, default='stylized_image.jpg',
-                        help='Specify the output filename for the generated image.\nDefault: stylized_image.jpg')
-
+                        help='Specify the output filename for the generated image. Default: stylized_image.jpg')
+    parser.add_argument('--learning-rate', type=float, default=0.01, help='Set the learning rate. Default: 0.01')
 
     # Parsing the arguments
     args = parser.parse_args()
@@ -47,6 +47,7 @@ def process_arguments():
     content_image_path = args.content_image
     style_image_path = args.style_image
     epochs = args.epochs
+    learning_rate = args.learning_rate
     if not args.output_filename.endswith('.jpg'):
         args.output_filename += '.jpg'
     output_path = os.path.join("output_images", args.output_filename)
@@ -61,7 +62,7 @@ def process_arguments():
     if not isinstance(epochs, int):
         raise ValueError(f"Error: 'epochs' must be an integer")
 
-    return content_image_path, style_image_path, epochs, output_path
+    return content_image_path, style_image_path, epochs, learning_rate, output_path
 
 def gram_matrix(input_tensor):
     # Reshape the input tensor (batch, h,w,c ) to (batch_size, height*width, channels)
@@ -131,7 +132,7 @@ class ArtisticFeatureExtractor(tf.keras.models.Model):
     return {'content': content_dict, 'style': style_dict}
 
 def main():
-    content_image_path, style_image_path, epochs, output_path = process_arguments()
+    content_image_path, style_image_path, epochs, learning_rate, output_path = process_arguments()
     content_image = load_img(content_image_path)
     style_image = load_img(style_image_path)
     feature_extractor = ArtisticFeatureExtractor(STYLE_LAYERS, CONTENT_LAYERS)
@@ -154,7 +155,7 @@ def main():
 
     image = tf.Variable(content_image)
     tf.image.total_variation(image).numpy()
-    opt = tf.keras.optimizers.legacy.Adam(learning_rate=ALPHA_RATE, beta_1=0.99, epsilon=1e-1)
+    opt = tf.keras.optimizers.legacy.Adam(learning_rate=learning_rate, beta_1=0.99, epsilon=1e-1)
 
     for i in range(epochs):
         train_step(image)
