@@ -1,7 +1,11 @@
+# About<img align="" width="90" height="55" src="images/logo.png" style='margin:-10px 10px'>
 
-# pixforgeon <img src="images/logo.png" alt="Logo" width="130" height="130" style="float: right; margin-top: 60px; margin-right: 20px;">
-
-**pixforgeon** is my experimental implementation of **Neural Style Transfer (NST)** using `TensorFlow`. `myvgg.py` was first developed following the guidelines of the original [**VGG19**](https://arxiv.org/pdf/1409.1556.pdf) implementation . Subsequently, the **NST** technique was utilized, blending the style of one image into the content of another, resulting in visually mesmerizing compositions.
+<div style="display: flex; align-items: center;">
+  <p>
+    <strong>pixforgeon</strong> is my experimental implementation of <strong>Neural Style Transfer (NST)</strong> using <code>TensorFlow</code>. <code>myvgg.py</code> was first developed following the guidelines of the original <a href="https://arxiv.org/pdf/1409.1556.pdf"><strong>VGG19</strong> </a> implementation . Subsequently, the <strong>NST</strong> technique was utilized, blending the style of one image into the content of another, resulting in visually mesmerizing compositions.
+  </p>
+  <img src="images/animation.gif" width="300" height="auto" alt="Cat Animation">
+</div>
 
 ## Table of Contents
   - [Synopsis](#synopsis)
@@ -25,7 +29,7 @@
 ## Personal Remarks
 My main sources of applying `step 3` was an exercise in a course offered by DeepLearning.AI in the Coursera platform instructed by Andrew Ng and  [this](https://www.tensorflow.org/tutorials/generative/style_transfer) tutorial by TensorFlow. 
 
-Since that and because I noticed an inconsistency between the 2 implementations which is that in the latter, the loss function is not applied directly to the content image, I have checked numerous sources to understand the reason. It turns out that by following the latter approach, the style features can be more dominant and thus converge (generate) a style on the generated image faster.
+Since that and because I noticed an inconsistency between the 2 implementations which is that in the latter, the loss function is not applied directly to the content image, I have checked numerous sources to understand the reason. It turns out that by following the latter approach, the style features can be more dominant and thus converge (generate) a style on the generated image faster. On the other hand though, content distotrions will appear faster.
 
 By applying the second technique and experimenting with different images on actual faces, I noticed that the style sometimes can take over quite fast (approx. 400 epochs. This number was set as default if no epochs are specified) and generates some satisfying results, while other times for epochs > 2000 and a learning rate of 0.01, the style distorts the image, leading to either fascinating or funny outcomes.
 
