@@ -49,5 +49,26 @@ pixforgeon/
 
 ## Roll it!
 
+Enhance your images with **NST** using the pixforgeon.py script. Explore the available options by typing `--help`` to customize and optimize the application of NST to your pictures.
 
+```
+options:
+  -h, --help            show this help message and exit
+  --content-image CONTENT_IMAGE
+                        Path to the content image file
+  --style-image STYLE_IMAGE
+                        Path to the style image file
+  --epochs EPOCHS       Number of echoes. Default: 400
+  --output-filename OUTPUT_FILENAME
+                        Specify the output filename for the generated image. Default: stylized_image.jpg
+  --learning-rate LEARNING_RATE
+                        Set the learning rate. Default: 0.01
+```
+Fields that have Default values are optional
 
+Give execute rights to `chmod +x pixforgeon.py
+`
+
+Run: `./pixforgeon.py --content-image /path/to/image/your_content_image.jpg --style-image /path/to/image/your_style_image.jpg`
+
+I have tested it with `jpg` `jpeg` `png` formats.
