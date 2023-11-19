@@ -1,11 +1,8 @@
-# About<img align="" width="90" height="55" src="images/logo.png" style='margin:-10px 10px'>
+# About<img align="" width="90" height="55" src="images/logo.png" style='margin: -10px 10px'>
 
-<div style="display: flex; align-items: center;">
-  <p>
-    <strong>pixforgeon</strong> is my experimental implementation of <strong>Neural Style Transfer (NST)</strong> using <code>TensorFlow</code>. <code>myvgg.py</code> was first developed following the guidelines of the original <a href="https://arxiv.org/pdf/1409.1556.pdf"><strong>VGG19</strong> </a> implementation . Subsequently, the <strong>NST</strong> technique was utilized, blending the style of one image into the content of another, resulting in visually mesmerizing compositions.
-  </p>
-  <img src="images/animation.gif" width="300" height="auto" alt="Cat Animation">
-</div>
+<img align="right" width="300" height="auto" src="images/animation.gif">
+
+**pixforgeon** is my experimental implementation of **Neural Style Transfer (NST)** using `TensorFlow`. `myvgg.py` was first developed following the guidelines of the original [**VGG19**](https://arxiv.org/pdf/1409.1556.pdf) implementation. Subsequently, the **NST** technique was utilized, blending the style of one image into the content of another, resulting in visually mesmerizing compositions.
 
 ## Table of Contents
   - [Synopsis](#synopsis)
