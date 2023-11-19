@@ -1,4 +1,4 @@
-# About<img align="" width="90" height="55" src="images/logo.png" style='margin: -10px 10px'>
+# About<img align="" width="90" height="55" src="images/logo.png" style='margin: -20px 10px'>
 
 <img align="right" width="300" height="auto" src="images/animation.gif">
 
