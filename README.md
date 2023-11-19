@@ -1,5 +1,5 @@
 #  About                   <img src="images/logo.png" alt="Logo" width="90" height="55" style="margin: -1% 1%"> 
-<img style="float: right;" width="300" height="auto" src="images/animation.gif">
+<img align="right" width="300" height="auto" src="images/animation.gif">
 
 **pixforgeon** is my experimental implementation of **Neural Style Transfer (NST)** using `TensorFlow`. `myvgg.py` was first developed following the guidelines of the original [**VGG19**](https://arxiv.org/pdf/1409.1556.pdf) implementation. Subsequently, the **NST** technique was utilized, blending the style of one image into the content of another, resulting in visually mesmerizing compositions.
 
