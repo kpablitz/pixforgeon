@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import time
 import os
 import argparse
 import tensorflow as tf
@@ -166,4 +166,8 @@ def main():
     pass
 
 if __name__ == "__main__":
+    start_time = time.time()
     main()
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"Time taken: {elapsed_time:.2f} seconds")
