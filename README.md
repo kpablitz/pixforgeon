@@ -7,7 +7,10 @@
   - [Synopsis](#synopsis)
   - [Personal Remarks](#personal-remarks)
   - [Repo Structure](#repo-structure)
+  - [Setup](setup)
+    - [TensorFlow Intricacies](#tensorflow-intricacies)
   - [Roll it!](#roll-it)
+  - [M1 CPU vs GPU](#m1-cpu-vs-gpu)
   - [Logo](#logo)
   - [License](#license)
 
@@ -47,12 +50,51 @@ pixforgeon/
 ├── requirements.txt
 └── utils.py
 ```
+## Setup
+
+# Project Name
+
+## Setup
+
+To set up this project locally, follow these steps:
+
+```bash
+# Step 1: Clone the repository
+git clone https://github.com/kpablitz/pixforgeon.git
+cd pixforgeon
+
+# Step 2: Create a virtual environment
+python -m venv .venv
+
+# Step 3: Activate the virtual environment on Unix or MacOS
+source .venv/bin/activate
+
+# Step 4: Install dependencies
+pip install -r requirements.txt
+```
+
+### Tensorflow Intricacies
+
+For optimal performance, it is advisable to use `tensorflow` with a `gpu` when available. Otherwise, training models with a high number of `epochs` may take an extended amount of time.
+
+I tested this with version `2.14.0`, and starting from version `2.x.x`, the `gpu` version for `NVIDIA GPUs` using `CUDA` is integrated into the package.
+
+If your system does not have an `NVIDIA GPU`, you may receive warning messages that can be safely ignored, and the package will utilize the `cpu`.
+
+In my case, I used the package along with the `tensorflow-metal` package for `Macs` with `M1` chips.
+
+For those interested in utilizing `AMD GPUs` with `tensorflow`, you can explore ROCm support [here](https://rocm.docs.amd.com/en/latest/how_to/tensorflow_install/tensorflow_install.html).
+
+
+
 
 ## Roll it!
 
 Enhance your images with **NST** using the pixforgeon.py script. Explore the available options by typing `--help`` to customize and optimize the application of NST to your pictures.
 
-```
+
+
+```python
 options:
   -h, --help            show this help message and exit
   --content-image CONTENT_IMAGE
@@ -65,17 +107,35 @@ options:
   --learning-rate LEARNING_RATE
                         Set the learning rate. Default: 0.01
 ```
+
 Fields that have Default values are optional.
 
-Give execute rights to `chmod +x pixforgeon.py` or use `python3 pixforgeon.py`  
+Give execute rights to `chmod +x pixforgeon.py` or use `python pixforgeon.py`  
 
-Run: `./pixforgeon.py --content-image /path/to/image/your_content_image.jpg --style-image /path/to/image/your_style_image.jpg`
+Run: 
+
+```bash
+./pixforgeon.py --content-image /path/to/image/your_content_image.jpg --style-image /path/to/image/your_style_image.jpg
+```
 
 I have tested it with `jpg` `jpeg` `png` formats.
 
 You can configure the name of the generated image with the option `--output-filename OUTPUT_FILENAME`. The generates image is stored under `./output_images/` folder which is created in case it is missing.
 
 ![NST_Output_Plot](images/NST_outputs_plot.jpg)
+
+
+45.20 metal, 436.42 seconds
+
+# M1 CPU vs GPU
+
+Performance test conducted with `--epochs 500`, comparing the `Apple M1 chip's` `cpu` and `gpu`. We can see that the performance boost by using the GPU is around `9,6` times faster.
+
+| Component | Time Taken |
+|-----------|------------|
+| M1 CPU    | 433.16 seconds |
+| M1 GPU    | 45.20 seconds  |
+
 
 ## Logo
 Logo was generated on [here](https://logo.com/).
