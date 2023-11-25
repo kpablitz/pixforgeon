@@ -1,7 +1,7 @@
 ## File Naming Convention
 
-- `<style_image>`: Abbreviated.
-- `<content_image>`: Name of the content image.
+- `<style_image>`: Style image name.
+- `<content_image>`: Content image name.
 - `<e>`: Number of epochs.
 - `<sw>`: Style weight.
 - `<cw>`: Content weight.
