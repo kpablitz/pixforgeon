@@ -158,6 +158,8 @@ Logo was generated on [here](https://logo.com/).
 ## Acknowlegments
 - [DeepLearning](https://www.deeplearning.ai/courses/deep-learning-specialization/) Specialization by Andrew Ng 
 
+- VGG [paper](https://arxiv.org/pdf/1409.1556.pdf)
+
 - Tensorflow's [tutorial on NST](https://www.tensorflow.org/tutorials/generative/style_transfer).
 
 - Pytorch [NST by Aleksa Gordic ](https://github.com/gordicaleksa/pytorch-neural-style-transfer) for insights and showcasing on the effects on weight parameters
