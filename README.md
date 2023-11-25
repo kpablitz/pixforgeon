@@ -12,6 +12,7 @@
   - [Roll it!](#roll-it)
   - [M1 CPU vs GPU](#m1-cpu-vs-gpu)
   - [Logo](#logo)
+  - [Acknowlegments](#Acknowlegments)
   - [License](#license)
 
 ## Synopsis
@@ -30,9 +31,14 @@
 ## Personal Remarks
 My main sources of applying `step 3` was an exercise in a course offered by DeepLearning.AI in the Coursera platform instructed by Andrew Ng and  [this](https://www.tensorflow.org/tutorials/generative/style_transfer) tutorial by TensorFlow. 
 
-Since that and because I noticed an inconsistency between the 2 implementations which is that in the latter, the loss function is not applied directly to the content image, I have checked numerous sources to understand the reason. It turns out that by following the latter approach, the style features can be more dominant and thus converge (generate) a style on the generated image faster. On the other hand though, content distotrions will appear faster.
+Since that and because I noticed an inconsistency between the 2 implementations which is that in the latter, the `gram` matrix is not applied to the content image, I checked few sources to understand the reason. It turns out that while the `gram` matrix is traditionally associated with style loss to capture feature correlations for style, some implementations experiment with using it in conjunction with the content image to achieve specific artistic effects. This is not a standard approach but can be explored for creative purposes.
 
-By applying the second technique and experimenting with different images on actual faces, I noticed that the style sometimes can take over quite fast (approx. 400 epochs. This number was set as default if no epochs are specified) and generates some satisfying results, while other times for epochs > 2000 and a learning rate of 0.01, the style distorts the image, leading to either fascinating or funny outcomes.
+By applying the second technique and experimenting with different images on actual faces, I noticed that based on image background, the style sometimes can take over quite fast (approx. 400 epochs). Sometimes satisfying results were gernerated, while other times for epochs > 2000 and a learning rate of 0.01, the style could distort the image, leading to either fascinating or funny outcomes. Initial configurations for `style_weight`, `content_weight`, and `total_variation_weight` were `1e-2`, `1e4`, `30` respectively. 
+
+As a next step, I experimented with the above settings giving more `weight` to style and content to either emphasize style features and converge to an artistic result faster (fewer epochs) or get ride of content distortions by preserving content.
+
+In further exploration, I drew inspiration from the insightful experiments conducted by Aleksa Gordić and played with `total variation weight`. His [work](https://github.com/gordicaleksa/pytorch-neural-style-transfer/tree/master) provides valuable insights into the effects of manipulating style, content and total variation weights. 
+ 
 
 ## Repo Structure
 ```
@@ -50,9 +56,6 @@ pixforgeon/
 ├── requirements.txt
 └── utils.py
 ```
-## Setup
-
-# Project Name
 
 ## Setup
 
@@ -90,22 +93,29 @@ For those interested in utilizing `AMD GPUs` with `tensorflow`, you can explore 
 
 ## Roll it!
 
-Enhance your images with **NST** using the pixforgeon.py script. Explore the available options by typing `--help`` to customize and optimize the application of NST to your pictures.
+Enhance your images with **NST** using the pixforgeon.py script. Explore the available options by typing `--help` to customize and optimize the application of NST to your pictures.
 
 
 
 ```python
 options:
   -h, --help            show this help message and exit
-  --content-image CONTENT_IMAGE
+  --content-image CONTENT_IMAGE, -c CONTENT_IMAGE
                         Path to the content image file, including the image name. Example: /path/to/image/your_content_image.jpg
-  --style-image STYLE_IMAGE
+  --style-image STYLE_IMAGE, -s STYLE_IMAGE
                         Path to the content image file, including the image name. Example: /path/to/image/your_style_image.jpg
-  --epochs EPOCHS       Number of echoes. Default: 400
+  --content-weight CONTENT_WEIGHT, -cw CONTENT_WEIGHT
+                        Set the weight for content loss. Default: 1e5
+  --style-weight STYLE_WEIGHT, -sw STYLE_WEIGHT
+                        Set the weight for style loss. Default: 1e1
+  --epochs EPOCHS, -e EPOCHS
+                        Number of echoes. Default: 400
   --output-filename OUTPUT_FILENAME
                         Specify the output filename for the generated image. Default: stylized_image.jpg
-  --learning-rate LEARNING_RATE
+  --learning-rate LEARNING_RATE, -lr LEARNING_RATE
                         Set the learning rate. Default: 0.01
+  --total-variation-weight TOTAL_VARIATION_WEIGHT, -tw TOTAL_VARIATION_WEIGHT
+                        Set the weight for total variation loss. Default: 1e1
 ```
 
 Fields that have Default values are optional.
@@ -136,9 +146,25 @@ Performance test conducted with `--epochs 500`, comparing the `Apple M1 chip's` 
 | M1 CPU    | 433.16 seconds |
 | M1 GPU    | 45.20 seconds  |
 
+Note: During the implementation phase, a warning message was observed, indicating that the performance of `tf.keras.optimizers.Adam` was slower on `M1/M2 Macs` than the legacy `tf.keras.optimizers.legacy.Adam` and thus the latter is used.
+
 
 ## Logo
 Logo was generated on [here](https://logo.com/).
+
+## Acknowlegments
+- [DeepLearning](https://www.deeplearning.ai/courses/deep-learning-specialization/) Specialization by Andrew Ng 
+
+- VGG [paper](https://arxiv.org/pdf/1409.1556.pdf)
+
+- Tensorflow's [tutorial on NST](https://www.tensorflow.org/tutorials/generative/style_transfer).
+
+- Pytorch [NST by Aleksa Gordić ](https://github.com/gordicaleksa/pytorch-neural-style-transfer) for insights and showcasing on the effects on weight parameters
+
+- Pytorch [NST by Nazia Nafis](https://github.com/nazianafis/Neural-Style-Transfer/tree/main) 
+
+- Keras [implementation](https://hub.packtpub.com/neural-style-transfer-creating-artificial-art-with-deep-learning-and-transfer-learning/)
+
 
 ## License 
 
