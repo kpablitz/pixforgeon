@@ -35,9 +35,9 @@ Since that and because I noticed an inconsistency between the 2 implementations 
 
 By applying the second technique and experimenting with different images on actual faces, I noticed that based on image background, the style sometimes can take over quite fast (approx. 400 epochs). Sometimes satisfying results were gernerated, while other times for epochs > 2000 and a learning rate of 0.01, the style could distort the image, leading to either fascinating or funny outcomes. Initial configurations for `style_weight`, `content_weight`, and `total_variation_weight` were `1e-2`, `1e4`, `30` respectively. 
 
-As a next step, I experimented with the above settings giving more `weight` to style and content to either emphasize style features and converge to an artistic result faster (fewer epochs) or get ride of content distortions by preservving content.
+As a next step, I experimented with the above settings giving more `weight` to style and content to either emphasize style features and converge to an artistic result faster (fewer epochs) or get ride of content distortions by preserving content.
 
-In further exploration, I drew inspiration from the insightful experiments conducted by `Aleksa Gordić` and played with total variation weight. His [work](https://github.com/gordicaleksa/pytorch-neural-style-transfer/tree/master) provides valuable insights into the effects of manipulating style, content and total variation weights. 
+In further exploration, I drew inspiration from the insightful experiments conducted by Aleksa Gordić and played with `total variation weight`. His [work](https://github.com/gordicaleksa/pytorch-neural-style-transfer/tree/master) provides valuable insights into the effects of manipulating style, content and total variation weights. 
  
 
 ## Repo Structure
@@ -56,9 +56,6 @@ pixforgeon/
 ├── requirements.txt
 └── utils.py
 ```
-## Setup
-
-# Project Name
 
 ## Setup
 
@@ -162,7 +159,7 @@ Logo was generated on [here](https://logo.com/).
 
 - Tensorflow's [tutorial on NST](https://www.tensorflow.org/tutorials/generative/style_transfer).
 
-- Pytorch [NST by Aleksa Gordic ](https://github.com/gordicaleksa/pytorch-neural-style-transfer) for insights and showcasing on the effects on weight parameters
+- Pytorch [NST by Aleksa Gordić ](https://github.com/gordicaleksa/pytorch-neural-style-transfer) for insights and showcasing on the effects on weight parameters
 
 - Pytorch [NST by Nazia Nafis](https://github.com/nazianafis/Neural-Style-Transfer/tree/main) 
 
