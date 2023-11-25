@@ -7,8 +7,6 @@ from utils import *
 from myvgg import * 
 
 WEIGHT_PATH= 'pretrained_model/vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5'
-STYLE_WEIGHT=1e-2
-CONTENT_WEIGHT=1e4
 CONTENT_LAYERS = ['block5_conv2'] 
 
 STYLE_LAYERS = ['block1_conv1',
@@ -20,7 +18,6 @@ STYLE_LAYERS = ['block1_conv1',
 
 num_content_layers = len(CONTENT_LAYERS)
 num_style_layers = len(STYLE_LAYERS)
-TOTAL_VARIATION_WEIGHT=30
 
 def validate_paths(paths):
     for path in paths:
@@ -32,13 +29,17 @@ def process_arguments():
     parser = argparse.ArgumentParser(description='Image Processing Script')
 
     # Adding arguments
-    parser.add_argument('--content-image', type=str, help='Path to the content image file, including the image name. Example: /path/to/image/your_content_image.jpg')
-    parser.add_argument('--style-image', type=str, help='Path to the content image file, including the image name. Example: /path/to/image/your_style_image.jpg')
+    parser.add_argument('--content-image','-c', type=str, help='Path to the content image file, including the image name. Example: /path/to/image/your_content_image.jpg')
+    parser.add_argument('--style-image','-s', type=str, help='Path to the content image file, including the image name. Example: /path/to/image/your_style_image.jpg')
     # Adding an optional argument
-    parser.add_argument('--epochs', type=int, default=400, help='Number of echoes. Default: 400')
+    parser.add_argument('--content-weight', '-cw', type=float, default=1e5, help='Set the weight for content loss. Default: 1e5')
+    parser.add_argument('--style-weight', '-sw', type=float, default=1e1, help='Set the weight for style loss. Default: 1e1')
+    parser.add_argument('--epochs','-e', type=int, default=400, help='Number of echoes. Default: 400')
     parser.add_argument('--output-filename', type=str, default='stylized_image.jpg',
                         help='Specify the output filename for the generated image. Default: stylized_image.jpg')
-    parser.add_argument('--learning-rate', type=float, default=0.01, help='Set the learning rate. Default: 0.01')
+    parser.add_argument('--learning-rate', '-lr', type=float, default=0.01, help='Set the learning rate. Default: 0.01')
+    parser.add_argument('--total-variation-weight', '-tw', type=float, default=1e1, help='Set the weight for total variation loss. Default: 1e1')
+
 
     # Parsing the arguments
     args = parser.parse_args()
@@ -48,6 +49,9 @@ def process_arguments():
     style_image_path = args.style_image
     epochs = args.epochs
     learning_rate = args.learning_rate
+    content_weight = args.content_weight
+    style_weight = args.style_weight
+    total_variation_weight = args.total_variation_weight
     if not args.output_filename.endswith('.jpg'):
         args.output_filename += '.jpg'
     output_path = os.path.join("output_images", args.output_filename)
@@ -62,7 +66,18 @@ def process_arguments():
     if not isinstance(epochs, int):
         raise ValueError(f"Error: 'epochs' must be an integer")
 
-    return content_image_path, style_image_path, epochs, learning_rate, output_path
+    parameters = {
+        'content_image_path': content_image_path,
+        'style_image_path': style_image_path,
+        'content_weight' : content_weight,
+        'style_weight' : style_weight,
+        'epochs': epochs,
+        'learning_rate': learning_rate,
+        'output_path': output_path,
+        'total_variation_weight' : total_variation_weight
+    }    
+
+    return parameters
 
 def gram_matrix(input_tensor):
     # Reshape the input tensor (batch, h,w,c ) to (batch_size, height*width, channels)
@@ -86,16 +101,16 @@ def vgg_layers(layer_names):
   return model
 
 
-def style_content_loss(outputs,style_features,content_features):
+def style_content_loss(outputs,style_features,content_features, style_weight, content_weight):
     style_outputs = outputs['style']
     content_outputs = outputs['content']
     style_loss = tf.add_n([tf.reduce_mean((style_outputs[name]-style_features[name])**2) 
                            for name in style_outputs.keys()])
-    style_loss *= STYLE_WEIGHT / num_style_layers
+    style_loss *= style_weight / num_style_layers
 
     content_loss = tf.add_n([tf.reduce_mean((content_outputs[name]-content_features[name])**2) 
                              for name in content_outputs.keys()])
-    content_loss *= CONTENT_WEIGHT / num_content_layers
+    content_loss *= content_weight / num_content_layers
     loss = style_loss + content_loss
     return loss
 
@@ -132,7 +147,18 @@ class ArtisticFeatureExtractor(tf.keras.models.Model):
     return {'content': content_dict, 'style': style_dict}
 
 def main():
-    content_image_path, style_image_path, epochs, learning_rate, output_path = process_arguments()
+    parameters = process_arguments()
+    # Extract parameters
+    content_image_path = parameters['content_image_path']
+    style_image_path = parameters['style_image_path']
+    content_weight = parameters['content_weight']
+    style_weight = parameters['style_weight']
+    total_variation_weight = parameters['total_variation_weight']
+    epochs = parameters['epochs']
+    learning_rate = parameters['learning_rate']
+    output_path = parameters['output_path']
+
+
     content_image = load_img(content_image_path)
     style_image = load_img(style_image_path)
     feature_extractor = ArtisticFeatureExtractor(STYLE_LAYERS, CONTENT_LAYERS)
@@ -145,8 +171,8 @@ def main():
     def train_step(image):
       with tf.GradientTape() as tape:
         outputs = feature_extractor(image)
-        loss = style_content_loss(outputs,style_features,content_features)
-        loss += TOTAL_VARIATION_WEIGHT*tf.image.total_variation(image)
+        loss = style_content_loss(outputs,style_features,content_features,style_weight, content_weight)
+        loss += total_variation_weight*tf.image.total_variation(image)
 
       grad = tape.gradient(loss, image)
       opt.apply_gradients([(grad, image)])
