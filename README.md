@@ -146,7 +146,7 @@ Performance test conducted with `--epochs 500`, comparing the `Apple M1 chip's` 
 | M1 CPU    | 433.16 seconds |
 | M1 GPU    | 45.20 seconds  |
 
-Note: During the implementation phase, a warning message was observed, indicating that the performance of tf.keras.optimizers.Adam was slower on `M1/M2 Macs` than the legacy tf.keras.optimizers.legacy.Adam and thus the latter is used.
+Note: During the implementation phase, a warning message was observed, indicating that the performance of `tf.keras.optimizers.Adam` was slower on `M1/M2 Macs` than the legacy `tf.keras.optimizers.legacy.Adam` and thus the latter is used.
 
 
 ## Logo
