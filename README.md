@@ -12,7 +12,7 @@
   - [Roll it!](#roll-it)
   - [M1 CPU vs GPU](#m1-cpu-vs-gpu)
   - [Logo](#logo)
-  - [Acknowlegments]
+  - [Acknowlegments](#Acknowlegments)
   - [License](#license)
 
 ## Synopsis
